@@ -1,0 +1,8 @@
+# Ablation preset: class-aware loss on the v7 dataset.
+# Stronger focal loss + inverse-frequency class weighting to help rare classes.
+dataset: v7
+roboflow:
+  project: Fish-Detection-v7
+  version: 1
+fl_gamma: 2.0
+class_weighting: inverse_freq
