@@ -1,0 +1,61 @@
+# Authoritative training defaults for train.py.
+# Resolution order: this file <- RUN_CONFIG (a run's YAML) <- CLI key=value overrides.
+# oceanctl writes only the fields a user changed into RUN_CONFIG; they merge over these.
+
+# --- model / data ---
+model: yolov11          # yolov11 | rtdetr
+model_size: l           # n | s | m | l | x  (rtdetr: l | x)
+dataset: v5             # dataset version tag (drives the Roboflow project below)
+checkpoint: ""          # resume-from .pt path; blank = start from pretrained
+
+# --- Roboflow source (API key comes from $ROBOFLOW_API_KEY, never hardcode it) ---
+roboflow:
+  workspace: DeepSeaObjectDetection
+  project: Fish-Detection-v5
+  version: 1
+
+# --- paths ---
+dataset_dir: ./dataset
+runs_dir: ./runs
+
+# --- training ---
+epochs: 100
+imgsz: 640
+batch: 16
+workers: 4
+device: 0
+
+# --- optimizer ---
+optimizer: AdamW
+lr0: 0.001
+lrf: 0.01
+warmup_epochs: 3
+cos_lr: true
+weight_decay: 0.0005
+
+# --- loss / imbalance (the ablation levers) ---
+dropout: 0.0
+fl_gamma: 1.5
+class_weighting: inverse_freq   # none | inverse_freq
+
+# --- augmentation ---
+fliplr: 0.5
+flipud: 0.1
+degrees: 10.0
+translate: 0.1
+scale: 0.5
+shear: 2.0
+hsv_h: 0.03
+hsv_s: 0.7
+hsv_v: 0.4
+mosaic: 1.0
+mixup: 0.15
+copy_paste: 0.1
+blur: 0.05
+erasing: 0.2
+
+# --- checkpointing / logging ---
+save_period: 10
+patience: 30
+plots: true
+verbose: true

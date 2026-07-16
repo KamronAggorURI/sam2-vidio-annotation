@@ -1,0 +1,4 @@
+# Ablation preset: baseline with no per-class weighting and no focal loss.
+# Useful as the control run to measure what class-aware loss actually buys.
+class_weighting: none
+fl_gamma: 0.0
